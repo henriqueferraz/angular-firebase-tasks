@@ -1,0 +1,20 @@
+<mat-spinner diameter="50" strokeWidth="3" class="spinner" *ngIf="loading"></mat-spinner>
+<mat-nav-list>
+  <app-task-item *ngFor="let task of tasks$ | async " [task]="task" (performTask)="onPerformTask($event)" (selectTask)="selectedTask=$event"
+    [matMenuTriggerFor]="taskMenu" [matMenuTriggerData]="{ taskToUpdateOrDelete: task }"></app-task-item>
+</mat-nav-list>
+<mat-menu #taskMenu="matMenu" overlapTrigger="false">
+  <ng-template matMenuContent let-task="taskToUpdateOrDelete">
+    <button mat-menu-item (click)="showDialog(task)">
+      <mat-icon>edit</mat-icon>
+      <span>Atualizar</span>
+    </button>
+    <button mat-menu-item (click)="onDelete(task)">
+      <mat-icon>delete</mat-icon>
+      <span>Remover</span>
+    </button>
+  </ng-template>
+</mat-menu>
+<button mat-fab class="fab-botton-right" (click)="showDialog()">
+  <mat-icon>add</mat-icon>
+</button>
